@@ -1,0 +1,1090 @@
+# THE GROWING FOREST
+## Production-Level 3D Personal Blogging Platform — Complete Development Specification
+
+You are a senior Three.js/WebGL engineer, full-stack developer, 3D environment artist, UI/UX designer, and software architect.
+
+Your task is to design and implement a production-quality, visually exceptional, fully functional personal blogging platform built around an interactive 3D forest.
+
+This is not a conventional blog with a forest illustration in its background.
+
+**The forest IS the blogging platform.**
+
+Every published article represents a tree. Every tree represents an idea, a thought, a lesson, an experience, or a piece of knowledge that has been planted in the author's intellectual world.
+
+As publications accumulate over time, the forest grows.
+
+The result should feel like exploring someone's personal world of thoughts through a beautiful, living 3D environment.
+
+---
+
+# 1. CORE CONCEPT AND EXPERIENCE
+
+The website opens directly into a beautiful, immersive 3D forest.
+
+The visitor sees a natural environment containing different species of trees, vegetation, terrain, rocks, flowers, and atmospheric elements.
+
+Each tree represents one published post.
+
+The fundamental relationship is:
+
+- One published post = one tree.
+- One tree = one accessible article.
+- The publication date determines the tree's age.
+- The tree's age determines its visual growth stage.
+- The post's category can influence the tree's species.
+- Clicking a tree opens the corresponding article.
+- The forest continuously reflects the author's publishing history.
+
+A visitor should immediately understand that this is a collection of writings, not an ordinary website.
+
+The experience should communicate growth, curiosity, knowledge, solitude, exploration, and the passage of time.
+
+The visual atmosphere should be immersive, sophisticated, calm, and slightly mysterious.
+
+Avoid making the environment look like a cartoon game, a children's educational application, or a generic metaverse.
+
+The forest should resemble an artistic, carefully composed miniature natural world.
+
+# 2. VISUAL DIRECTION AND 3D ART STYLE
+
+## Overall visual style
+
+Use a high-quality stylized 3D environment with realistic natural proportions and carefully designed materials.
+
+The preferred visual direction:
+
+- Beautiful, detailed 3D trees with distinct silhouettes.
+- Natural terrain with gentle elevation changes.
+- Rich vegetation and scattered environmental details.
+- Soft sunlight and volumetric-looking atmospheric effects.
+- Natural shadows and ambient occlusion.
+- Subtle wind affecting leaves, grass, and branches.
+- Atmospheric fog creating depth.
+- A carefully balanced natural color palette.
+- Cinematic lighting without excessive visual effects.
+
+The forest must look like a place someone would genuinely want to explore.
+
+Avoid:
+- Flat 2D trees.
+- Emoji-based tree representations.
+- Identical duplicated tree models.
+- Excessively bright saturated colors.
+- Low-quality primitive-looking objects.
+- Unnecessary neon effects.
+- Generic dashboard aesthetics.
+- Excessive UI elements covering the forest.
+
+## Tree variety
+
+The forest must contain multiple visually distinguishable tree species.
+
+Suggested species:
+
+1. Oak — large, broad canopy and strong trunk.
+2. Pine — tall, narrow, layered evergreen structure.
+3. Birch — slender trunk with distinctive light-colored bark.
+4. Maple — recognizable branching and broad leaves.
+5. Willow — hanging branches and flowing canopy.
+6. Cedar — dense evergreen foliage.
+7. Cherry blossom — delicate pink blossoms during its flowering season.
+
+Every species should have a distinct silhouette, trunk, branch structure, foliage, and material appearance.
+
+Use procedural geometry, optimized instanced meshes, generated textures, or suitable original 3D assets.
+
+Do not represent every tree using the same geometry with a different color.
+
+Trees should look natural from the normal exploration distance and remain visually interesting when the camera approaches them.
+
+# 3. THE FOREST ENVIRONMENT
+
+Create a complete 3D environment.
+
+## Terrain
+
+The forest should have:
+
+- Gently undulating terrain.
+- Natural grass coverage.
+- Occasional rocks and stones.
+- Small plants and bushes.
+- Fallen leaves.
+- Small flowers.
+- Subtle paths connecting different forest areas.
+- Occasional clearings.
+- Environmental details that make the scene feel inhabited by nature.
+
+Avoid a completely flat green plane.
+
+Terrain should have enough variation to make the forest feel three-dimensional while remaining easy to navigate.
+
+## Atmospheric environment
+
+Implement:
+
+- A sky dome or equivalent atmospheric sky system.
+- Dynamic sunlight.
+- Soft directional shadows.
+- Ambient lighting.
+- Distance fog.
+- Subtle environmental particles.
+- Gentle wind.
+- Natural background ambience, if audio is enabled.
+
+The forest should have a coherent lighting system.
+
+Consider implementing a day/night cycle with a configurable default time.
+
+The lighting should transition smoothly between morning, afternoon, sunset, and night.
+
+The default experience should be a beautiful daytime forest with warm, filtered sunlight.
+
+# 4. TREE GROWTH SYSTEM
+
+This is the most important functional and visual feature.
+
+Every tree must grow according to the age of its corresponding publication.
+
+Growth must be deterministic and based on the publication timestamp.
+
+For example:
+
+- A post published today produces a seedling.
+- A post published one week ago produces a small young plant.
+- A post published one month ago produces a recognizable young tree.
+- A post published six months ago produces a developing tree.
+- A post published one year ago produces a substantially developed tree.
+- A post published several years ago produces a mature tree.
+
+These are illustrative stages. Design a configurable growth curve that makes growth visually satisfying.
+
+## Technical implementation
+
+Calculate tree age using:
+
+current_time - post.published_at
+
+Convert the resulting duration into a normalized growth parameter between 0 and 1.
+
+Use this parameter to control:
+
+- Trunk height.
+- Trunk thickness.
+- Branch development.
+- Canopy size.
+- Number and density of leaves.
+- Overall tree silhouette.
+
+Growth should be smooth and continuous rather than jumping between disconnected models.
+
+Use optimized geometry or prebuilt growth-stage representations where appropriate.
+
+The visual result should be consistent every time the same post is loaded.
+
+Do not make trees randomly change size every time a visitor opens the website.
+
+## Growth animation
+
+When the forest initially loads, trees can gradually reveal their growth.
+
+Newly planted trees should have a particularly beautiful planting animation:
+
+1. A small seed appears.
+2. The seed enters the ground.
+3. A small shoot emerges.
+4. The trunk develops.
+5. Branches and leaves unfold.
+
+Keep this animation short and visually elegant.
+
+It should not replay every time a visitor clicks around the forest.
+
+Provide a setting to enable or disable introductory animations.
+
+## Tree appearance and species selection
+
+Allow the administrator to select a tree species when publishing an article.
+
+Provide an automatic selection option based on the article category.
+
+The administrator must always be able to override the automatic selection.
+
+Each tree must retain its species even after the website is restarted.
+
+# 5. FOREST ORGANIZATION
+
+The forest should not be a random collection of trees.
+
+Develop a spatial organization system.
+
+Possible organizational principles:
+
+- Categories occupy distinct regions.
+- Related posts grow relatively close to one another.
+- Trees are distributed naturally.
+- Older trees can occupy established forest areas.
+- New trees can appear in recently developed areas.
+
+However, avoid making the forest look like a rigid grid.
+
+Use deterministic procedural placement.
+
+Each post should have persistent X/Z coordinates stored in the database.
+
+Adding a new article should not rearrange the entire forest.
+
+When the administrator publishes a new article:
+
+1. Create the database record.
+2. Assign the article a tree species.
+3. Calculate its initial growth.
+4. Generate a suitable position.
+5. Save the position.
+6. Introduce the new tree into the forest.
+7. Display a planting animation.
+
+The tree must remain in the same position across subsequent visits.
+
+# 6. CAMERA AND NAVIGATION
+
+The forest should be the first thing visitors encounter.
+
+Implement a polished camera system.
+
+## Desktop
+
+Support:
+
+- Mouse drag to rotate the camera.
+- Scroll wheel to zoom.
+- Smooth camera movement.
+- Click to select a tree.
+- Double-click or an appropriate interaction to focus on a tree.
+- A clear method to return to the overall forest view.
+
+Use damped camera controls.
+
+Avoid allowing visitors to rotate underneath the terrain or lose the forest.
+
+Set reasonable zoom and rotation limits.
+
+## Mobile
+
+Mobile usability is a hard requirement, not an afterthought.
+
+Support:
+
+- One-finger drag to rotate.
+- Pinch to zoom.
+- Tap to select a tree.
+- Smooth touch interactions.
+- Appropriate camera limits.
+- Responsive interface positioning.
+
+Avoid requiring hover interactions.
+
+The forest must remain usable on ordinary smartphones, not only flagship devices.
+
+On smaller screens, optimize camera movement and visual density.
+
+# 7. TREE INTERACTION
+
+Every tree is interactive.
+
+When a visitor selects a tree:
+
+1. The camera smoothly moves toward it.
+2. The tree becomes the visual focus.
+3. A floating information panel appears.
+4. The panel displays the corresponding article information.
+
+The information panel should include:
+
+- Article title.
+- Publication date.
+- Category.
+- Short description.
+- Reading time.
+- Tree species.
+- A button or clear interaction to read the complete article.
+
+The selected tree should receive subtle visual emphasis.
+
+Do not immediately cover the tree with a large interface.
+
+The visitor should still see the tree while interacting with its information.
+
+Provide an obvious way to close the panel and return to exploring.
+
+# 8. ARTICLE READING EXPERIENCE
+
+When a visitor chooses to read a post, transition from the forest into an elegant reading interface.
+
+The reading interface should feel like opening a page in a personal journal.
+
+It must be visually consistent with the forest's atmosphere.
+
+Display:
+
+- Article title.
+- Subtitle, if available.
+- Publication date.
+- Category.
+- Estimated reading time.
+- Article cover image, if available.
+- Full article content.
+- Tags.
+- Related articles.
+
+Support properly formatted content:
+
+- Headings.
+- Paragraphs.
+- Bold and italic text.
+- Quotes.
+- Ordered and unordered lists.
+- Images.
+- Links.
+- Code blocks.
+- Tables.
+
+Typography must be excellent.
+
+Prioritize reading comfort over decorative effects.
+
+The article should be responsive and readable on phones.
+
+Include a clear return-to-forest interaction.
+
+Visitors should be able to share direct article URLs.
+
+Every article must have a permanent, SEO-friendly URL.
+
+For example:
+
+/post/the-art-of-discipline
+
+Do not make article access dependent on the visitor navigating through the 3D forest.
+
+Direct links must work independently.
+
+# 9. WEBSITE STRUCTURE
+
+The application should have the following primary routes:
+
+/                   Main interactive forest.
+/about              About the author.
+/archive            Chronological publication archive.
+/categories         Browse categories.
+/post/:slug         Individual article.
+/login              Administrator login.
+/admin              Administrator dashboard.
+/admin/posts        Article management.
+/admin/posts/new    Create article.
+/admin/settings     Application settings.
+
+The forest must remain the central experience.
+
+Other pages should use a consistent visual identity.
+
+# 10. ABOUT THE AUTHOR — INTRODUCTION
+
+Create a carefully written introduction based on the following author profile.
+
+Do not invent achievements, qualifications, or professional experience.
+
+The text should sound thoughtful, intellectual, authentic, and personal rather than promotional.
+
+## Author information
+
+Name: Fayozbek Erkinjonov
+
+Location: Uzbekistan.
+
+Education: Student at Tashkent State University of Economics, studying International Economics and International Economic Relations.
+
+Academic background:
+- IELTS Academic overall score: 8.0.
+- SAT score: 1500.
+- Three-time district Informatics Olympiad winner.
+- Participated in robotics and technology programs.
+
+Interests and areas of exploration:
+
+**Technology and Computer Science**
+- Programming and software engineering.
+- Artificial intelligence.
+- Data science.
+- Cloud computing.
+- Engineering and technological innovation.
+
+**Business and Economics**
+- Entrepreneurship.
+- Financial literacy.
+- International economics.
+- Business development.
+- Trade and distribution.
+- Investing and wealth creation.
+
+**Personal Development**
+- Discipline.
+- Responsibility.
+- Intellectual growth.
+- Physical challenges.
+- Learning through practical experience.
+- Developing a stronger mind and character.
+
+**Other interests**
+- History.
+- Islamic knowledge.
+- Running.
+- Philosophy.
+- Reading and independent research.
+
+Previous projects include software platforms, Telegram bots, AI-related projects, and technology experiments.
+
+## Suggested introductory text
+
+Title: A Mind Still Growing
+
+"I am Fayozbek Erkinjonov, a student from Uzbekistan interested in understanding how the world works and how ideas can be transformed into something meaningful.
+
+My interests lie at the intersection of technology, economics, business, and human development. I enjoy exploring computer science, artificial intelligence, entrepreneurship, history, and the ideas that shape individuals and societies.
+
+I believe that learning should extend beyond classrooms and that meaningful progress comes from curiosity, experimentation, discipline, and the willingness to challenge one's existing understanding.
+
+This forest is my personal space for collecting ideas, documenting experiences, sharing discoveries, and preserving thoughts that I consider worth remembering.
+
+Every publication plants a tree. Some ideas are young seedlings; others have had years to grow.
+
+The forest will change as I continue learning, questioning, experimenting, and building.
+
+There is no predetermined final destination. The purpose is to keep growing."
+
+This introduction must be editable through the administrator dashboard.
+
+Do not make the About page look like a conventional corporate biography.
+
+# 11. ADMINISTRATOR AUTHENTICATION
+
+The platform has exactly one administrator: the author.
+
+There must be no public registration.
+
+Only the administrator can create, edit, publish, unpublish, or delete articles.
+
+Initial login credentials:
+
+Username: fa_admin
+
+Password: fa_admin
+
+These credentials are initial setup credentials only.
+
+Security requirements:
+
+- Store passwords using Argon2id or another appropriate modern password-hashing algorithm.
+- Never store plaintext passwords.
+- Never expose credentials in frontend code.
+- Never hardcode authentication secrets into public JavaScript.
+- Use secure session management.
+- Use HttpOnly, Secure (in production), and appropriate SameSite cookies.
+- Protect all administrator routes and API endpoints.
+- Implement login rate limiting.
+- Validate all authentication requests on the server.
+- Implement CSRF protection where applicable.
+- Invalidate sessions when credentials are changed.
+
+On the first successful login, require the administrator to change the default credentials before accessing the dashboard.
+
+The administrator must be able to change:
+
+- Username.
+- Password.
+
+Provide a secure change-credentials interface.
+
+A logout function is mandatory.
+
+# 12. ADMINISTRATOR DASHBOARD
+
+Create a clean, functional, private dashboard.
+
+It should not feel like an unrelated generic administration template.
+
+Use a simplified visual language consistent with the forest.
+
+Dashboard overview:
+
+- Total published posts.
+- Total trees.
+- Number of categories.
+- Draft count.
+- Most recent publication.
+- Oldest publication.
+- Average publication frequency.
+
+Include a small visual representation of the forest's growth over time.
+
+## Article management
+
+The administrator must be able to:
+
+- Create articles.
+- Edit articles.
+- Save drafts.
+- Publish articles.
+- Unpublish articles.
+- Delete articles.
+- Preview articles.
+- Assign categories.
+- Add tags.
+- Upload cover images.
+- Select tree species.
+- Set publication dates.
+- Set SEO metadata.
+- Generate or edit article slugs.
+
+Support automatic reading-time calculation.
+
+The editor should support rich text and Markdown or an equivalent structured content format.
+
+Autosave drafts where practical.
+
+Publishing an article should automatically create its corresponding tree.
+
+Editing an article must update the corresponding tree's metadata.
+
+Unpublishing an article should remove it from the public forest without deleting the article.
+
+Deleting an article should also remove its corresponding tree, subject to an explicit confirmation.
+
+## Categories
+
+Allow the administrator to create, edit, and delete categories.
+
+Example initial categories:
+
+- Technology
+- Programming
+- Artificial Intelligence
+- Economics
+- Business
+- Personal Development
+- Philosophy
+- History
+- Science
+- Reflections
+
+These categories are examples, not fixed limitations.
+
+# 13. LOCAL SQL DATABASE
+
+Use SQLite as the primary database.
+
+The application must persist all essential information locally.
+
+Do not use Firebase, Supabase, or another external database service.
+
+Design a normalized and maintainable relational schema.
+
+Suggested tables:
+
+**admin**
+- id
+- username
+- password_hash
+- created_at
+- updated_at
+
+**posts**
+- id
+- title
+- slug
+- subtitle
+- excerpt
+- content
+- cover_image
+- status
+- published_at
+- created_at
+- updated_at
+- reading_time
+- seo_title
+- seo_description
+
+**categories**
+- id
+- name
+- slug
+- description
+- created_at
+
+**post_categories**
+- post_id
+- category_id
+
+**tags**
+- id
+- name
+- slug
+
+**post_tags**
+- post_id
+- tag_id
+
+**trees**
+- id
+- post_id
+- species
+- position_x
+- position_y
+- position_z
+- rotation
+- scale_seed
+- created_at
+
+**settings**
+- id
+- setting_key
+- setting_value
+- updated_at
+
+**sessions**
+- id
+- session_token_hash
+- created_at
+- expires_at
+
+Use appropriate foreign keys, indexes, unique constraints, and cascading behavior.
+
+The database should automatically initialize on first launch.
+
+Use database migrations so future schema updates do not destroy existing data.
+
+Implement backup and restoration functionality.
+
+Allow the administrator to export articles in a portable format such as JSON or Markdown.
+
+Store uploaded images in a persistent local directory, with their paths referenced from SQLite.
+
+Do not store important uploaded files in temporary directories.
+
+# 14. FOREST SEARCH AND DISCOVERY
+
+A forest with many trees must remain easy to navigate.
+
+Implement a search interface.
+
+Visitors should be able to search by:
+
+- Article title.
+- Keywords.
+- Category.
+- Tags.
+
+Search results should display the corresponding tree and article information.
+
+Selecting a result should smoothly move the camera to the relevant tree.
+
+Also implement:
+
+**Chronological archive**
+
+A conventional chronological list of articles.
+
+**Category filtering**
+
+Visitors can temporarily highlight trees belonging to a particular category.
+
+**Latest publications**
+
+A small section showing recently planted trees.
+
+**Random discovery**
+
+A button that selects a random published article and takes the visitor to its tree.
+
+These features must complement the forest rather than replace it.
+
+# 15. INTERFACE AND RESPONSIVE DESIGN
+
+The interface should be minimal and elegant.
+
+The 3D environment must occupy the majority of the screen.
+
+Suggested interface elements:
+
+Top-left:
+- Blog name or wordmark.
+
+Top-right:
+- About.
+- Archive.
+- Search.
+- Small menu.
+
+Bottom or side:
+- A subtle forest navigation hint.
+- Optional forest statistics.
+- A small button to return to the full forest view.
+
+On mobile:
+
+- Avoid a large permanent navigation bar.
+- Use compact controls.
+- Ensure buttons have comfortable touch targets.
+- Use bottom sheets for contextual information when appropriate.
+- Avoid horizontal scrolling.
+- Keep text readable.
+- Preserve the forest's visual importance.
+
+Do not overload the interface with unnecessary icons, labels, or cards.
+
+# 16. TECHNICAL ARCHITECTURE
+
+Use a maintainable full-stack architecture.
+
+Recommended technology:
+
+Frontend:
+- React.
+- TypeScript.
+- Three.js.
+- React Three Fiber if it materially improves component management.
+- Drei where appropriate.
+- A lightweight state-management solution.
+- Responsive CSS.
+
+Backend:
+- Node.js.
+- TypeScript.
+- Express or Fastify.
+
+Database:
+- SQLite.
+- A suitable SQLite driver or ORM.
+
+Content:
+- Structured rich-text storage or Markdown.
+- Local image uploads.
+
+The application should use a clear separation between:
+
+1. 3D rendering.
+2. Forest data and placement.
+3. Growth calculations.
+4. Article management.
+5. Authentication.
+6. API endpoints.
+7. Database access.
+8. UI components.
+
+Do not mix all functionality into one enormous component.
+
+Define clear TypeScript types for posts, trees, categories, settings, and authentication.
+
+Use server-side validation.
+
+# 17. 3D PERFORMANCE AND MOBILE OPTIMIZATION
+
+This is a browser-based 3D application. Performance is essential.
+
+The forest must run smoothly on ordinary laptops and smartphones.
+
+Implement:
+
+- InstancedMesh for repeated geometry.
+- Shared geometries and materials.
+- Efficient tree rendering.
+- Level of Detail (LOD).
+- Frustum culling.
+- Texture compression where supported.
+- Efficient shadow settings.
+- Adaptive device pixel ratio.
+- Limited rendering resolution on low-end devices.
+- Reduced foliage density at a distance.
+- Lazy loading of assets.
+- Efficient animation loops.
+- Proper GPU resource disposal.
+
+Do not create thousands of independent meshes unnecessarily.
+
+Avoid expensive real-time shadows on every individual leaf.
+
+Use baked or simplified shading for distant environmental details.
+
+Pause or reduce rendering when the browser tab is hidden.
+
+Provide a reduced-effects mode.
+
+The application must remain usable if the 3D renderer fails.
+
+In that situation, show a functional 2D forest/archive alternative instead of a blank screen.
+
+Target a stable 30–60 FPS depending on device capabilities.
+
+# 18. ACCESSIBILITY AND USABILITY
+
+The platform must not depend exclusively on 3D interaction.
+
+Visitors must also be able to:
+
+- Browse articles through a conventional archive.
+- Navigate using keyboard controls.
+- Access articles through direct URLs.
+- Use search.
+- Read all content without interacting with the 3D scene.
+
+Use semantic HTML.
+
+Provide visible focus states.
+
+Support reduced-motion preferences.
+
+Ensure appropriate color contrast.
+
+Provide meaningful labels for interactive elements.
+
+# 19. SEO AND DEPLOYMENT
+
+The website should be suitable for public deployment.
+
+Implement:
+
+- SEO-friendly article URLs.
+- Unique page titles.
+- Meta descriptions.
+- Open Graph metadata.
+- Social sharing previews.
+- Sitemap generation.
+- robots.txt.
+- Canonical URLs.
+- RSS feed.
+- Structured article metadata where appropriate.
+
+The public pages must be indexable.
+
+The private administrator interface must not be indexed.
+
+Use environment variables for deployment configuration and secrets.
+
+Provide:
+
+- Production build instructions.
+- Database initialization.
+- Database migration instructions.
+- Backup instructions.
+- Deployment instructions.
+- Environment variable documentation.
+- A reliable restart strategy.
+
+The SQLite database and uploaded images must survive application restarts and deployments.
+
+# 20. ADDITIONAL DETAILS THAT MAKE THE FOREST SPECIAL
+
+Consider the following optional interactions, provided they do not compromise performance or usability.
+
+**Tree information**
+
+Hovering over a tree on desktop can reveal a subtle title label.
+
+Tapping a tree on mobile should open its information.
+
+**Seasonal atmosphere**
+
+The forest can have seasonal variations:
+
+- Spring: fresh foliage and occasional blossoms.
+- Summer: dense green canopies.
+- Autumn: warm-colored leaves.
+- Winter: reduced foliage and occasional snow.
+
+Seasonal changes should be configurable and should not make tree age calculations inconsistent.
+
+**Forest statistics**
+
+Display meaningful information such as:
+
+- Total trees planted.
+- Total articles published.
+- Oldest tree.
+- Newest tree.
+- Most active category.
+
+**Special clearings**
+
+Create subtle environmental areas that can serve as visual landmarks.
+
+For example, an open clearing can contain the forest's name or a short quotation from the author.
+
+Do not turn these into generic dashboard panels.
+
+# 21. DEVELOPMENT AND QUALITY ASSURANCE
+
+Do not stop at a visually impressive prototype.
+
+The final product must be a working blogging platform.
+
+All major interactions must be implemented.
+
+Do not use fake article data as a substitute for real database integration.
+
+Seed the application with a small number of clearly marked demonstration articles only if needed for initial testing. Make it possible to remove them easily.
+
+Test the following:
+
+1. First-time application initialization.
+2. First administrator login.
+3. Mandatory default-password change.
+4. Subsequent login and logout.
+5. Creating a draft.
+6. Publishing an article.
+7. Automatic tree creation.
+8. Tree growth calculation.
+9. Persistent tree positioning.
+10. Editing an article.
+11. Unpublishing an article.
+12. Deleting an article.
+13. Searching for an article.
+14. Opening an article through a direct URL.
+15. Database persistence after restarting the server.
+16. Image upload persistence.
+17. Database backup and restoration.
+18. Desktop navigation.
+19. Mobile navigation.
+20. 3D renderer failure and fallback behavior.
+
+Check for console errors, broken routes, missing assets, memory leaks, and database inconsistencies.
+
+Take screenshots of the actual application at important stages.
+
+Inspect the visual result yourself. Do not assume that successful compilation means the design is successful.
+
+# 22. DESIGN AND IMPLEMENTATION PROCESS
+
+Develop the platform in clearly separated stages.
+
+**Stage 1 — Visual concept**
+
+Build the main forest environment.
+
+Prioritize:
+- Camera composition.
+- Terrain.
+- Tree variety.
+- Lighting.
+- Atmospheric depth.
+- Overall visual identity.
+
+The first screen must be visually impressive without requiring the visitor to interact with anything.
+
+**Stage 2 — Tree system**
+
+Implement:
+- Tree species.
+- Tree placement.
+- Growth calculations.
+- Persistent tree coordinates.
+- Tree selection.
+- Tree information panels.
+
+**Stage 3 — Reading experience**
+
+Implement:
+- Article pages.
+- Typography.
+- Direct URLs.
+- Archive.
+- Categories.
+- Search.
+
+**Stage 4 — Administrator system**
+
+Implement:
+- Authentication.
+- Credential management.
+- Dashboard.
+- Article editor.
+- Image uploads.
+- Categories and tags.
+- Publishing workflow.
+
+**Stage 5 — Database and integration**
+
+Connect every feature to SQLite.
+
+Remove all unnecessary demonstration data.
+
+Test persistence and data integrity.
+
+**Stage 6 — Mobile and performance**
+
+Optimize:
+- Touch navigation.
+- Rendering performance.
+- Memory usage.
+- Responsive layouts.
+- Reduced-effects mode.
+
+**Stage 7 — Final visual refinement and deployment**
+
+Perform a complete visual and functional audit.
+
+Correct inconsistencies before declaring the project complete.
+
+Do not skip essential functionality merely to finish faster.
+
+---
+
+# 23. FINAL DELIVERABLES
+
+Deliver a complete, production-ready application containing:
+
+1. Full frontend source code.
+2. Full backend source code.
+3. SQLite database initialization and migration system.
+4. 3D forest environment.
+5. Date-driven tree growth engine.
+6. Single-administrator authentication.
+7. Complete article management system.
+8. Public reading interface.
+9. Search and archive.
+10. Responsive desktop and mobile experiences.
+11. Backup and restoration functionality.
+12. SEO implementation.
+13. Production build configuration.
+14. README with installation and deployment instructions.
+
+The application must be runnable locally and suitable for subsequent deployment to a VPS.
+
+No placeholder functionality.
+
+No fake authentication.
+
+No nonfunctional buttons.
+
+No arbitrary hardcoded article content.
+
+No dependence on external database services.
+
+No destructive database initialization on every restart.
+
+No unnecessary architectural complexity.
+
+# FINAL CREATIVE DIRECTION
+
+Remember the fundamental idea:
+
+A person spends years learning, observing, questioning, building, and experiencing life.
+
+Some thoughts disappear. Others remain.
+
+This platform gives those thoughts a physical representation.
+
+Every publication plants a tree. Time gives it life. The forest becomes a record of intellectual growth.
+
+When a visitor opens this website, the experience should not feel like opening a blog.
+
+**It should feel like entering someone's mind, expressed as a forest.**
